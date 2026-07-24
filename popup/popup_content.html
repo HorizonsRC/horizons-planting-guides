@@ -1,0 +1,53 @@
+<!--
+  Popup body for the Potential Ecosystems layer (ArcGIS Online Map Viewer).
+
+  HOW TO USE
+  ----------
+  Map Viewer > select layer > Popups > Title:
+        {ES_Label}
+  then Content > Add content > Text, click the </> source-code button in the
+  text toolbar, and paste everything below the divider.
+
+  Field names come from 01_prepare_layer.py. Curly-brace tokens are substituted
+  by Map Viewer at draw time.
+
+  WHY A TEXT BLOCK RATHER THAN AN IMAGE BLOCK
+  -------------------------------------------
+  The built-in Image element supports a URL and a link, but not a caption with
+  its own markup, and it will render a broken-image box when Guide_IMG is null.
+  A text block lets you wrap the image in the anchor so the whole guide is
+  click-to-open, which is the behaviour you want on mobile.
+
+  IMPORTANT
+  ---------
+  Map Viewer strips <style> blocks and most CSS from popup HTML, so everything
+  here is inline. Keep it inline or it will be silently dropped.
+-->
+
+<!-- ------------------------------------------------------------------ -->
+
+<p style="margin:0 0 10px 0; font-size:13px; color:#444;">
+  Planting guide: <b>{Guide_Title}</b>
+</p>
+
+<a href="{Guide_PDF}" target="_blank" rel="noopener"
+   style="display:block; text-decoration:none;">
+  <img src="{Guide_IMG}" alt="Planting guide for {ES_Label}"
+       style="width:100%; height:auto; border:1px solid #ccc; border-radius:4px;" />
+</a>
+
+<p style="margin:10px 0 0 0;">
+  <a href="{Guide_PDF}" target="_blank" rel="noopener"
+     style="display:inline-block; padding:8px 14px; background:#1b5e5a;
+            color:#fff; text-decoration:none; border-radius:4px;
+            font-weight:600; font-size:13px;">
+    Download the full guide (PDF)
+  </a>
+</p>
+
+<p style="margin:12px 0 0 0; font-size:11px; color:#666; line-height:1.4;">
+  Ecosystem type <b>{ES_Code}</b> from the Singers &amp; Rogers potential
+  ecosystem mapping for the Manawat&#363;-Whanganui region. This shows what
+  would likely grow here naturally &mdash; always check actual site conditions
+  (drainage, exposure, frost) before buying plants.
+</p>

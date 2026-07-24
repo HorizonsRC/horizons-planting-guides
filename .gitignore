@@ -1,0 +1,28 @@
+# This repo exists to host docs/ - the guide images, PDFs and embed HTML.
+# The tooling that produces them is one-off and stays local.
+BUILD-NOTES.md
+scripts/
+crosswalk/
+
+# Source PDFs. The renamed copies in docs/ are byte-identical, so committing
+# both would double the repo for nothing.
+planting-guides/
+
+# ArcGIS working files
+*.aprx
+*.lock
+*.sr.lock
+*.gdb/
+*.sde
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Editors / OS
+.claude/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
