@@ -1,0 +1,70 @@
+// Planting guide block for the ecosystem popup.
+//
+// WHERE THIS GOES  --  read this, it is easy to put it in the wrong place
+// ---------------------------------------------------------------------
+//   Map Viewer > layer > Pop-ups > Add content > ARCADE
+//   (NOT "Attribute expressions". An attribute expression returns plain text
+//    and Map Viewer escapes any HTML in it, so the images never render. An
+//    Arcade *content element* returns a popup element and does render HTML.)
+//
+//   Paste this in, Done. There is no {expression/...} token to reference -
+//   the element renders itself wherever you place it in the content list.
+//
+// WHY ARCADE AT ALL
+//   Two ecosystems have a second guide: "WF3-2/WF6 mosaic" and
+//   "DN2/5 Coastal Sand Dunes Mosaic". The other 36 have Guide2_IMG empty.
+//   A static <img src="{Guide2_IMG}"> renders a broken-image box on those 36,
+//   because popup HTML cannot test whether a field is empty. Arcade builds the
+//   markup first, so it simply leaves the block out.
+
+var accent = '#1b5e5a';
+
+// One guide: caption, clickable image, download button.
+function guideBlock(title, img, pdf) {
+    if (IsEmpty(img)) { return ''; }
+
+    var caption = '';
+    if (!IsEmpty(title)) {
+        caption = '<p style="margin:0 0 6px 0;font-size:13px;color:#444;">'
+                + '<b>' + title + '</b></p>';
+    }
+
+    var picture = '<a href="' + pdf + '" target="_blank" rel="noopener" '
+                + 'style="display:block;text-decoration:none;">'
+                + '<img src="' + img + '" alt="' + title + '" '
+                + 'style="width:100%;height:auto;border:1px solid #ccc;'
+                + 'border-radius:4px;" /></a>';
+
+    var button = '<p style="margin:8px 0 18px 0;">'
+               + '<a href="' + pdf + '" target="_blank" rel="noopener" '
+               + 'style="display:inline-block;padding:8px 14px;background:'
+               + accent + ';color:#fff;text-decoration:none;border-radius:4px;'
+               + 'font-weight:600;font-size:13px;">Download this guide (PDF)</a>'
+               + '</p>';
+
+    return caption + picture + button;
+}
+
+var html = guideBlock($feature.Guide_Title, $feature.Guide_IMG,
+                      $feature.Guide_PDF)
+         + guideBlock($feature.Guide2_Title, $feature.Guide2_IMG,
+                      $feature.Guide2_PDF);
+
+// Shouldn't happen - the layer is filtered to ecosystems that have a guide -
+// but don't show the public an empty popup if it ever does.
+if (IsEmpty(html)) {
+    html = '<p>No planting guide is available for this ecosystem yet.</p>';
+}
+
+// Mosaics carry two guides because the site is a mix of both ecosystem types.
+if (!IsEmpty($feature.Guide2_IMG)) {
+    html = '<p style="margin:0 0 10px 0;font-size:13px;color:#444;">'
+         + 'This area is a mosaic of two ecosystem types, so both planting '
+         + 'guides are shown.</p>' + html;
+}
+
+// Returning a popup element, not a string. This is what makes the HTML render.
+return {
+    type: 'text',
+    text: html
+};
