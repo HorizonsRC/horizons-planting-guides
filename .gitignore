@@ -1,6 +1,8 @@
 # This repo exists to host docs/ - the guide images, PDFs and embed HTML.
-# The tooling that produces them is one-off and stays local.
+# The tooling and working notes that produce them are one-off and stay local.
 BUILD-NOTES.md
+HANDOFF.md
+notes/
 scripts/
 crosswalk/
 
