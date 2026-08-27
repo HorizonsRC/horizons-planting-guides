@@ -70,10 +70,42 @@ var html = guideBlock($feature.Guide_Title, $feature.Guide_IMG,
          + guideBlock($feature.Guide2_Title, $feature.Guide2_IMG,
                       $feature.Guide2_PDF, $feature.Guide2_PRINT);
 
-// Shouldn't happen - the layer is filtered to ecosystems that have a guide -
-// but don't show the public an empty popup if it ever does.
+// No guide for this ecosystem type. As of 2026-08-27 the layer publishes every
+// vegetated type, not just the 49 with a guide, so this is a normal path rather
+// than a safety net: a visitor who searches an alpine, wetland or coastal
+// address gets their ecosystem named instead of a hole in the map.
+//
+// Open water, ice, reclaimed land, the bare beach and the two rock gravelfields
+// are excluded from the layer entirely (see NON_ECOSYSTEMS in
+// 04_make_publish_copy.py), so there is no case for them here.
+//
+// The remaining situations still need different wording - "no guide available"
+// is unhelpful for alpine, where planting is usually the wrong answer to begin
+// with - so the message is picked off the Type field.
 if (IsEmpty(html)) {
-    html = '<p>No planting guide is available for this ecosystem yet.</p>';
+    var kind = $feature.Type;
+
+    var note = '';
+    if (kind == 'Alpine') {
+        note = 'This is an alpine ecosystem. Planting is rarely appropriate '
+             + 'above the treeline, and these communities are best restored by '
+             + 'protecting what is already there, so no planting guide is '
+             + 'offered.';
+    } else if (kind == 'Wetland') {
+        note = 'No planting guide has been produced for this wetland type yet. '
+             + 'The general wetlands guide may still be a useful starting '
+             + 'point, and wetland restoration usually depends more on '
+             + 'hydrology than on species choice.';
+    } else {
+        note = 'No planting guide has been produced for this ecosystem type '
+             + 'yet. It may be added in future.';
+    }
+
+    html = '<p style="margin:0 0 10px 0;font-size:13px;color:#444;">'
+         + note + '</p>'
+         + '<p style="margin:0 0 14px 0;font-size:13px;color:#444;">'
+         + 'For advice on planting at this site, contact Horizons Regional '
+         + 'Council.</p>';
 }
 
 // Mosaics carry two guides because the site is a mix of both ecosystem types.
