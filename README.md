@@ -10,12 +10,13 @@ accompanying story map. Nothing in this repo runs. It is images and PDFs only.
 
 | | |
 |---|---|
-| `docs/*.jpg` | 26 guide pages, 1400 px wide, around 290 KB each. Used as popup images. |
-| `docs/*.pdf` | 24 files: 23 planting guides at full quality for download, plus `Introduction_pages.pdf`. |
+| `docs/*.jpg` | 29 guide pages, 1400 px wide, around 290 KB each. Used as popup images. |
+| `docs/*.pdf` | 53 files: 26 planting guides at full quality for download, 26 printer-friendly versions of the same, and the combined wetlands guide linked from the story map. |
 
-Guides cover 38 potential ecosystem types across the region. Several types share
-a guide. The beech forests all point at `CLF10_CLF11_CLF12_planting_guide`, for
-example, so there are fewer files than ecosystem types.
+Guides cover 49 potential ecosystem types across the region. Several types share
+a guide. The beech forests all point at `CLF10-11-12_plant_guide`, for example,
+and every cold forest type points at `CDF_all_types_and_MF18_plant_guide`, so
+there are far fewer files than ecosystem types.
 
 ## Linking to a guide
 
@@ -23,17 +24,22 @@ Files are named after the ecosystem codes they cover, with spaces and ampersands
 replaced so the URLs need no escaping:
 
 ```
-https://horizonsrc.github.io/horizons-planting-guides/WF8_planting_guide_p1.jpg
-https://horizonsrc.github.io/horizons-planting-guides/WF8_planting_guide.pdf
+https://horizonsrc.github.io/horizons-planting-guides/WF8_plant_guide_p1.jpg
+https://horizonsrc.github.io/horizons-planting-guides/WF8_plant_guide.pdf
+https://horizonsrc.github.io/horizons-planting-guides/WF8_plant_guide_print.pdf
 ```
 
 Image files carry a `_p1`, `_p2` and so on page suffix. Most guides are a single
 page; the dune guide has four (an introduction, then front, middle and rear
 dune).
 
+A `_print` suffix on a PDF marks the printer-friendly version, laid out for
+black and white A4. Every guide has one.
+
 These addresses are stored in full on every feature of the hosted layer, in the
-`Guide_IMG`, `Guide_PDF`, `Guide2_IMG` and `Guide2_PDF` fields. Renaming a file
-or moving this repo breaks every popup until those fields are rewritten.
+`Guide_IMG`, `Guide_PDF`, `Guide_PRINT`, `Guide2_IMG`, `Guide2_PDF` and
+`Guide2_PRINT` fields. Renaming a file or moving this repo breaks every popup
+until those fields are rewritten.
 
 ## Related ArcGIS Online items
 
