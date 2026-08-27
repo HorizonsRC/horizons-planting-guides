@@ -18,6 +18,10 @@ a guide. The beech forests all point at `CLF10-11-12_plant_guide`, for example,
 and every cold forest type points at `CDF_all_types_and_MF18_plant_guide`, so
 there are far fewer files than ecosystem types.
 
+The map itself shows 73 types, being every mapped ecosystem that supports
+vegetation. The remaining 24 have no guide yet and their popups say so. Alpine
+and most wetland types are mapped for context rather than for planting.
+
 ## Linking to a guide
 
 Files are named after the ecosystem codes they cover, with spaces and ampersands
