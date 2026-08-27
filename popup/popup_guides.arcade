@@ -11,16 +11,24 @@
 //   the element renders itself wherever you place it in the content list.
 //
 // WHY ARCADE AT ALL
-//   Two ecosystems have a second guide: "WF3-2/WF6 mosaic" and
-//   "DN2/5 Coastal Sand Dunes Mosaic". The other 36 have Guide2_IMG empty.
-//   A static <img src="{Guide2_IMG}"> renders a broken-image box on those 36,
-//   because popup HTML cannot test whether a field is empty. Arcade builds the
-//   markup first, so it simply leaves the block out.
+//   Four ecosystems have a second guide: "WF3-2/WF6 mosaic",
+//   "DN2/5 Coastal Sand Dunes Mosaic", and since the 2026-08 wetlands guide
+//   arrived, the two forest/swamp mosaics "MF4, Kahikatea / WL, Swamp mosaic"
+//   and "WF8, Kahikatea, pukatea forest and Swamp mosaic". The other 45 have
+//   Guide2_IMG empty. A static <img src="{Guide2_IMG}"> renders a broken-image
+//   box on those 45, because popup HTML cannot test whether a field is empty.
+//   Arcade builds the markup first, so it simply leaves the block out.
+//
+//   The same applies to Guide_PRINT: not every guide is guaranteed to have a
+//   printer-friendly twin, so the second button is conditional too.
 
 var accent = '#1b5e5a';
 
-// One guide: caption, clickable image, download button.
-function guideBlock(title, img, pdf) {
+// One guide: caption, clickable image, then a download button and - where the
+// guide author supplied one - a printer-friendly version alongside it. The
+// print PDF is the same plant list laid out for black and white A4, so it is
+// offered as a quieter secondary button rather than a second primary action.
+function guideBlock(title, img, pdf, printPdf) {
     if (IsEmpty(img)) { return ''; }
 
     var caption = '';
@@ -35,20 +43,32 @@ function guideBlock(title, img, pdf) {
                 + 'style="width:100%;height:auto;border:1px solid #ccc;'
                 + 'border-radius:4px;" /></a>';
 
-    var button = '<p style="margin:8px 0 18px 0;">'
-               + '<a href="' + pdf + '" target="_blank" rel="noopener" '
-               + 'style="display:inline-block;padding:8px 14px;background:'
-               + accent + ';color:#fff;text-decoration:none;border-radius:4px;'
-               + 'font-weight:600;font-size:13px;">Download this guide (PDF)</a>'
-               + '</p>';
+    var download = '<a href="' + pdf + '" target="_blank" rel="noopener" '
+                 + 'style="display:inline-block;margin:0 8px 6px 0;'
+                 + 'padding:8px 14px;background:' + accent + ';color:#fff;'
+                 + 'text-decoration:none;border-radius:4px;font-weight:600;'
+                 + 'font-size:13px;">Download this guide (PDF)</a>';
 
-    return caption + picture + button;
+    var printLink = '';
+    if (!IsEmpty(printPdf)) {
+        printLink = '<a href="' + printPdf + '" target="_blank" rel="noopener" '
+                  + 'style="display:inline-block;margin:0 0 6px 0;'
+                  + 'padding:8px 14px;background:#fff;color:' + accent + ';'
+                  + 'border:1px solid ' + accent + ';text-decoration:none;'
+                  + 'border-radius:4px;font-weight:600;font-size:13px;">'
+                  + 'Printer friendly (PDF)</a>';
+    }
+
+    var buttons = '<p style="margin:8px 0 18px 0;">'
+                + download + printLink + '</p>';
+
+    return caption + picture + buttons;
 }
 
 var html = guideBlock($feature.Guide_Title, $feature.Guide_IMG,
-                      $feature.Guide_PDF)
+                      $feature.Guide_PDF, $feature.Guide_PRINT)
          + guideBlock($feature.Guide2_Title, $feature.Guide2_IMG,
-                      $feature.Guide2_PDF);
+                      $feature.Guide2_PDF, $feature.Guide2_PRINT);
 
 // Shouldn't happen - the layer is filtered to ecosystems that have a guide -
 // but don't show the public an empty popup if it ever does.
